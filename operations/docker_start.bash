@@ -1,6 +1,3 @@
-echo "EXTERNAL_PATH is"
-echo ${EXTERNAL_PATH}
-
 XAUTH=/tmp/.docker.xauth
 if [ ! -f $XAUTH ]
 then

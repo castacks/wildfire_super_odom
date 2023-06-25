@@ -1,1 +1,0 @@
-docker exec --privileged -it super_odom bash -c "cd /root/subt_ws && bash"
