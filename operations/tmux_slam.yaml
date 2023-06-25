@@ -43,7 +43,7 @@ windows:
       - shell_command:
         - sleep 7
         - cat passwd | sudo --stdin whoami
-        - docker exec --privileged --env NAMESPACE=${NAMESPACE} -it super_odom bash
+        - docker exec --privileged -e NAMESPACE=${NAMESPACE} -it super_odom bash
         - cd /media/drive
         - rosbag play *.bag --clock --topic ${NAMESPACE}/camera_1/image_raw /thermal/image ${NAMESPACE}/imu/data ${NAMESPACE}/velodyne_packets ${NAMESPACE}/camera_1/image_raw:=/camera_1/image_raw ${NAMESPACE}/imu/data:=/imu/data ${NAMESPACE}/velodyne_packets:=/velodyne_packets
       - shell_command:

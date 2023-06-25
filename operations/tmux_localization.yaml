@@ -38,9 +38,9 @@ windows:
       - shell_command:
         - sleep 30
         - cat passwd | sudo --stdin whoami
-        - docker exec --privileged -it super_odom bash
-        - cd DATA_PATH
-        - rosbag play *.bag --clock --topic /NAMESPACE/camera_1/image_raw /thermal/image /NAMESPACE/imu/data /NAMESPACE/velodyne_packets /NAMESPACE/camera_1/image_raw:=/camera_1/image_raw /NAMESPACE/imu/data:=/imu/data /NAMESPACE/velodyne_packets:=/velodyne_packets OPTIONAL_START_TIME OPTIONAL_DURATION
+        - docker exec --privileged -e DATA_PATH=${DATA_PATH} -e NAMESPACE=${NAMESPACE} -e START_TIME=${START_TIME} -e PLAY_DURATION=${PLAY_DURATION} -it super_odom bash
+        - cd ${DATA_PATH}
+        - rosbag play *.bag --clock --topic ${NAMESPACE}/camera_1/image_raw /thermal/image ${NAMESPACE}/imu/data ${NAMESPACE}/velodyne_packets ${NAMESPACE}/camera_1/image_raw:=/camera_1/image_raw ${NAMESPACE}/imu/data:=/imu/data ${NAMESPACE}/velodyne_packets:=/velodyne_packets -s ${START_TIME} --duration ${PLAY_DURATION}
       - shell_command:
         - sleep 1
         - cat passwd | sudo --stdin whoami
@@ -52,18 +52,18 @@ windows:
     layout: tiled
     panes:
       - shell_command:
-        - sleep 1
+        - sleep ${DURATION}
         - cat passwd | sudo --stdin whoami
         - docker exec --privileged -it super_odom bash
-        - sleep DURATION
+        - sleep 1
         - rostopic pub -1 /savemap_command std_msgs/Bool true
       - shell_command:
         - sleep 1
         - cat passwd | sudo --stdin whoami
-        - docker exec --privileged -it super_odom bash
-        - cd RESULT_PATH
+        - docker exec --privileged -e DURATION=${DURATION} -it super_odom bash
+        - cd ${RESULT_PATH}
         - sleep 9
-        - rosbag record --duration=DURATION /uncertainty_X /uncertainty_Y /uncertainty_Z /uncertainty_pitch /uncertainty_roll /uncertainty_yaw /super_odometry_stats /prediction_source /velodyne_points /velodyne_points /camera_1/image_raw /imu/data /tf /velodyne_cloud_registered_imu /super_odometry_stats /prediction_source /aft_mapped_to_init_imu /integrated_to_init /accel_bias /gyro_bias
+        - rosbag record --duration=${DURATION} /uncertainty_X /uncertainty_Y /uncertainty_Z /uncertainty_pitch /uncertainty_roll /uncertainty_yaw /super_odometry_stats /prediction_source /velodyne_points /velodyne_points /camera_1/image_raw /imu/data /tf /velodyne_cloud_registered_imu /super_odometry_stats /prediction_source /aft_mapped_to_init_imu /integrated_to_init /accel_bias /gyro_bias
       - shell_command:
         - sleep 1
         - cat passwd | sudo --stdin whoami
