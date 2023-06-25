@@ -42,7 +42,7 @@ if __name__ == "__main__":
         else:
             end_timestamp = abs_start_timestamp + config["end_time"]
 
-        tmux_config = open("tmux.yaml.template", "r").read()
+        tmux_config = open("tmux_localization.yaml.template", "r").read()
         namespace = config["namespace"]
         if namespace[0] == "/":
             namespace = namespace[1:]
@@ -55,7 +55,7 @@ if __name__ == "__main__":
             .replace("OPTIONAL_DURATION", "" if config["start_time"] == -1 else "--duration " + str(end_timestamp - start_timestamp)) \
             .replace("DURATION", str(math.ceil(end_timestamp - start_timestamp) + 40)) \
             .replace("OPTIONAL_START_TIME", "" if config["start_time"] == 0 else "-s " + str(config["start_time"]))
-        tmuxp_config_file = open("tmux.yaml", "w")
+        tmuxp_config_file = open("tmux_localization.yaml", "w")
         tmuxp_config_file.write(tmux_config)
         tmuxp_config_file.close()
 
@@ -77,8 +77,8 @@ if __name__ == "__main__":
         proc = Process(target=escape_func, args=[math.ceil(end_timestamp - start_timestamp) + 90])
         proc.start()
 
-        os.system("tmuxp load tmux.yaml")
+        os.system("tmuxp load tmux_localization.yaml")
 
         proc.join()
 
-        os.system("rm tmux.yaml")
+        os.system("rm tmux_localization.yaml")

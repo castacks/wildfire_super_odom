@@ -17,7 +17,7 @@ windows:
         - sleep 1
         - cat passwd | sudo --stdin whoami
         - docker exec --privileged -it super_odom bash
-        - source ~/subt_ws/devel/setup.bash
+        - source /root/subt_ws/devel/setup.bash
         - roslaunch --wait velodyne_pointcloud VLP16_points.launch
   - window_name: nodes
     focus: true
@@ -27,15 +27,13 @@ windows:
         - sleep 1
         - cat passwd | sudo --stdin whoami
         - docker exec --privileged -it super_odom bash
-        - rm RESULT_PATH/ground_truth_path.csv
-        - rm RESULT_PATH/ground_truth_imu.csv
-        - source ~/subt_ws/devel/setup.bash
+        - source /root/subt_ws/devel/setup.bash
         - roslaunch --wait super_odometry ugv_offline.launch
       - shell_command:
         - sleep 1
         - cat passwd | sudo --stdin whoami
         - docker exec --privileged -it super_odom bash
-        - source ~/subt_ws/devel/setup.bash
+        - source /root/subt_ws/devel/setup.bash
         - roslaunch --wait vins_estimator cam1_debug.launch
       - shell_command:
         - sleep 30
@@ -47,7 +45,7 @@ windows:
         - sleep 1
         - cat passwd | sudo --stdin whoami
         - docker exec --privileged -it super_odom bash
-        - source ~/subt_ws/devel/setup.bash
+        - source /root/subt_ws/devel/setup.bash
         - rosrun super_odometry commander_node
   - window_name: misc
     focus: false
@@ -70,7 +68,7 @@ windows:
         - sleep 1
         - cat passwd | sudo --stdin whoami
         - docker exec --privileged -it super_odom bash
-        - cd ~/subt_ws
+        - cd /root/subt_ws
         - source devel/setup.bash
       - shell_command:
         - cat passwd | sudo --stdin whoami

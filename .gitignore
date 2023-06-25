@@ -1,4 +1,5 @@
 .catkin_tools/*
+accumulated_map/*
 build/*
 devel/*
 logs/*
