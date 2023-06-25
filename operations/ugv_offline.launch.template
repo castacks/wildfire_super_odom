@@ -1,0 +1,34 @@
+
+<launch>
+  <param name="world_frame" type="string" value="sensor_init"/>
+  <param name="world_frame_rot" type="string" value="sensor_init_rot"/>
+  <param name="sensor_frame" type="string" value="sensor"/>
+  <param name="sensor_frame_rot" type="string" value="sensor_rot"/>
+  <param name="groundtruth_path" type="string" value="CLOUD_PATH"/>
+
+  <arg name="calibration_path" default="$(find super_odometry)/config/mmpug/cmu_rc4_calibration.yaml"/>
+  <arg name="dataset_config" default="$(find super_odometry)/config/dataset/DATASET_CONFIG"/>
+  <rosparam command="load" file="$(find super_odometry)/config/ugv.yaml"/>
+   <node launch-prefix="nice -n -5" pkg="super_odometry" type="featureExtraction_node" name="featureExtraction_node" output="screen">
+   <param name="config_file" type="string" value="$(arg calibration_path)"/>
+   <param name="dataset_config_file" type="string" value="$(arg dataset_config)"/>
+  </node>
+
+   <node launch-prefix="nice -n -5" pkg="super_odometry" type="laserMapping_node" name="laserMapping_node" output="screen">
+    <param name="config_file" type="string" value="$(arg calibration_path)"/>
+    <param name="dataset_config_file" type="string" value="$(arg dataset_config)"/>
+  </node>
+
+  <node  launch-prefix="nice -n -5" pkg="super_odometry" type="imuPreintegration_node" name="imuPreintegration_node" output="screen">
+    <param name="config_file" type="string" value="$(arg calibration_path)"/>
+    <param name="dataset_config_file" type="string" value="$(arg dataset_config)"/>
+  </node>
+
+  <node pkg="tf" type="static_transform_publisher" name="sensorInitTransPublisher" args="0 0 0 1.5707963 0 1.5707963 /sensor_init /sensor_init_rot 1000"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="veloTransPublisher" args="0 0 0 0 0 0 /sensor /velodyne 1000"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="vlp_to_ouster"
+      args="-0.062780 0.004754 -0.070985 2.500081 1.559406 -0.654966 /sensor /os_sensor 100"/>
+
+</launch>
