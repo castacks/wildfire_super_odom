@@ -18,7 +18,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("--config", dest="config", help="JSON configuration file", required=True)
     parser.add_argument("--mode", dest="mode", help="0 for SLAM, 1 for localization", choices=["0", "1"], required=True)
-    parser.add_argument("--dataset-index", dest="index", help="index of the dataset in the JSON configuration file to run", type=int, required=False)
+    parser.add_argument("--dataset-index", dest="index", help="(optional) index of the dataset in the JSON configuration file to run", type=int, required=False)
     args = parser.parse_args()
     localization_mode = False if args.mode == "0" else True
     configs = json.load(open(args.config))
@@ -79,7 +79,7 @@ if __name__ == "__main__":
         if localization_mode:
             os.environ["DURATION"] = str(math.ceil(end_timestamp - start_timestamp) + 40)
 
-        os.system("tmuxp load tmux.yaml")
+        os.system("tmuxp load tmux_local.yaml")
 
         if i + 1 == len(configs):
             break
