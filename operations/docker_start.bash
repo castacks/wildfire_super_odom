@@ -27,5 +27,6 @@ docker run --name super_odom -itd \
      -v $XAUTH:$XAUTH \
      --runtime=nvidia \
      --rm \
+     --net ${DOCKER_NET_SETTING} \
      twu3/super_odom:reallatest \
      bash

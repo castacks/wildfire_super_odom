@@ -10,6 +10,7 @@ windows:
     layout: tiled
     panes:
       - shell_command:
+        - export DOCKER_NET_SETTING="bridge"
         - cat passwd | sudo --stdin -E bash docker_start.bash
         - sudo docker exec --privileged -it super_odom bash
         - roscore
