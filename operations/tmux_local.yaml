@@ -10,14 +10,12 @@ windows:
     layout: tiled
     panes:
       - shell_command:
-        - export DOCKER_NET_SETTING="bridge"
-        - cat passwd | sudo --stdin -E bash docker_start.bash
-        - sudo docker exec --privileged -it super_odom bash
+        - bash docker_start.bash
+        - docker exec --privileged -it super_odom bash
         - roscore
       - shell_command:
         - sleep 1
-        - cat passwd | sudo --stdin whoami
-        - sudo docker exec --privileged -it super_odom bash
+        - docker exec --privileged -it super_odom bash
         - source /root/subt_ws/devel/setup.bash
         - roslaunch --wait velodyne_pointcloud VLP16_points.launch
   - window_name: nodes
@@ -26,26 +24,22 @@ windows:
     panes:
       - shell_command:
         - sleep 1
-        - cat passwd | sudo --stdin whoami
-        - sudo docker exec --privileged -e IS_LOCALIZATION=${IS_LOCALIZATION} -e CLOUD_PATH=${CLOUD_PATH} -e DATASET_CONFIG=${DATASET_CONFIG} -e OUTPUT_PATH_TRAJ=${RESULT_PATH}/ground_truth_path.csv -e OUTPUT_PATH_IMU=${RESULT_PATH}/ground_truth_imu.csv -e MAP_PATH=${RESULT_PATH}/ -it super_odom bash
+        - docker exec --privileged -e IS_LOCALIZATION=${IS_LOCALIZATION} -e CLOUD_PATH=${CLOUD_PATH} -e DATASET_CONFIG=${DATASET_CONFIG} -e OUTPUT_PATH_TRAJ=${RESULT_PATH}/ground_truth_path.csv -e OUTPUT_PATH_IMU=${RESULT_PATH}/ground_truth_imu.csv -e MAP_PATH=${RESULT_PATH}/ -it super_odom bash
         - source /root/subt_ws/devel/setup.bash
         - roslaunch --wait super_odometry ugv_offline.launch provide_world_darpa_transform:=${IS_LOCALIZATION} groundtruth_path:=${CLOUD_PATH} data_config:=${DATASET_CONFIG} localization_output_path:=${OUTPUT_PATH_TRAJ} localization_output_path_imu:=${OUTPUT_PATH_IMU} accumulated_map_folder:=${MAP_PATH}
       - shell_command:
         - sleep 1
-        - cat passwd | sudo --stdin whoami
-        - sudo docker exec --privileged -it super_odom bash
+        - docker exec --privileged -it super_odom bash
         - source /root/subt_ws/devel/setup.bash
         - roslaunch --wait vins_estimator cam1_debug.launch
       - shell_command:
         - sleep ${PLAY_DELAY}
-        - cat passwd | sudo --stdin whoami
-        - sudo docker exec --privileged -e DATA_PATH=${DATA_PATH} -e NAMESPACE=${NAMESPACE} -e START_TIME=${START_TIME} -e PLAY_DURATION=${PLAY_DURATION} -it super_odom bash
+        - docker exec --privileged -e DATA_PATH=${DATA_PATH} -e NAMESPACE=${NAMESPACE} -e START_TIME=${START_TIME} -e PLAY_DURATION=${PLAY_DURATION} -it super_odom bash
         - cd ${DATA_PATH}
         - rosbag play *.bag --clock --topic ${NAMESPACE}/camera_1/image_raw /thermal/image ${NAMESPACE}/imu/data ${NAMESPACE}/velodyne_packets ${NAMESPACE}/camera_1/image_raw:=/camera_1/image_raw ${NAMESPACE}/imu/data:=/imu/data ${NAMESPACE}/velodyne_packets:=/velodyne_packets -s ${START_TIME} --duration ${PLAY_DURATION}
       - shell_command:
         - sleep 1
-        - cat passwd | sudo --stdin whoami
-        - sudo docker exec --privileged -it super_odom bash
+        - docker exec --privileged -it super_odom bash
         - source /root/subt_ws/devel/setup.bash
         - rosrun super_odometry commander_node
   - window_name: misc
@@ -54,26 +48,21 @@ windows:
     panes:
       - shell_command:
         - sleep 1
-        - cat passwd | sudo --stdin whoami
-        - sudo docker exec --privileged -e RESULT_PATH=${RESULT_PATH} -e IS_LOCALIZATION=${IS_LOCALIZATION} -e DURATION=${DURATION} -it super_odom bash
+        - docker exec --privileged -e RESULT_PATH=${RESULT_PATH} -e IS_LOCALIZATION=${IS_LOCALIZATION} -e DURATION=${DURATION} -it super_odom bash
         - cd ${RESULT_PATH}
-        - if [ ${IS_LOCALIZATION} == 1 ]; then sleep 9; fi
-        - if [ ${IS_LOCALIZATION} == 1 ]; then rosbag record --duration=${DURATION} /uncertainty_X /uncertainty_Y /uncertainty_Z /uncertainty_pitch /uncertainty_roll /uncertainty_yaw /super_odometry_stats /prediction_source /velodyne_points /velodyne_points /camera_1/image_raw /imu/data /velodyne_cloud_registered_imu /velodyne_cloud_registered /super_odometry_stats /prediction_source /aft_mapped_to_init_imu /aft_mapped_to_init /aft_mapped_to_init_incremental /integrated_to_init integrated_to_init2 /integrated_to_init_imu /integrated_to_init_incremental /integrated_to_global /accel_bias /gyro_bias; fi
+        - bash -c "if [ ${IS_LOCALIZATION} == 1 ]; then sleep 9; fi"
+        - bash -c "if [ ${IS_LOCALIZATION} == 1 ]; then rosbag record --duration=${DURATION} /uncertainty_X /uncertainty_Y /uncertainty_Z /uncertainty_pitch /uncertainty_roll /uncertainty_yaw /super_odometry_stats /prediction_source /velodyne_points /velodyne_points /camera_1/image_raw /imu/data /velodyne_cloud_registered_imu /velodyne_cloud_registered /super_odometry_stats /prediction_source /aft_mapped_to_init_imu /aft_mapped_to_init /aft_mapped_to_init_incremental /integrated_to_init integrated_to_init2 /integrated_to_init_imu /integrated_to_init_incremental /integrated_to_global /accel_bias /gyro_bias; fi"
       - shell_command:
         - sleep 1
-        - if [ ${IS_LOCALIZATION} == "1" ]; then sleep ${DURATION}; fi
-        - cat passwd | sudo --stdin whoami
-        - sudo docker exec --privileged -e IS_LOCALIZATION=${IS_LOCALIZATION} -it super_odom bash
-        - if [ ${IS_LOCALIZATION} == 1 ]; then rostopic pub -1 /savemap_command std_msgs/Bool true; fi
+        - bash -c "if [ ${IS_LOCALIZATION} == 1 ]; then sleep ${DURATION}; fi"
+        - docker exec --privileged -e IS_LOCALIZATION=${IS_LOCALIZATION} -it super_odom bash
+        - bash -c "if [ ${IS_LOCALIZATION} == 1 ]; then rostopic pub -1 /savemap_command std_msgs/Bool true; fi"
       - shell_command:
         - sleep 1
-        - cat passwd | sudo --stdin whoami
-        - sudo docker exec --privileged -it super_odom bash
+        - docker exec --privileged -it super_odom bash
         - cd /root/subt_ws
         - source devel/setup.bash
       - shell_command:
         - sleep ${PLAY_DELAY}
-        - cat passwd | sudo --stdin whoami
-        - sudo docker exec --privileged -it super_odom bash
         - sleep 2
-        - rviz -d /root/subt_ws/src/subt_state_estimation/subt_ground.rviz
+        - rviz -d /../src/subt_state_estimation/subt_ground.rviz
