@@ -65,4 +65,4 @@ windows:
       - shell_command:
         - sleep ${PLAY_DELAY}
         - sleep 2
-        - rviz -d /../src/subt_state_estimation/subt_ground.rviz
+        - rviz -d ../src/subt_state_estimation/subt_ground.rviz
