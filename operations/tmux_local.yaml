@@ -24,7 +24,7 @@ windows:
     panes:
       - shell_command:
         - sleep 1
-        - docker exec --privileged -e IS_LOCALIZATION=${IS_LOCALIZATION} -e CLOUD_PATH=${CLOUD_PATH} -e DATASET_CONFIG=${DATASET_CONFIG} -e OUTPUT_PATH_TRAJ=${RESULT_PATH}/ground_truth_path.csv -e OUTPUT_PATH_IMU=${RESULT_PATH}/ground_truth_imu.csv -e MAP_PATH=${RESULT_PATH}/ -it super_odom bash
+        - sudo docker exec --privileged -e IS_LOCALIZATION=${IS_LOCALIZATION} -e CLOUD_PATH=${CLOUD_PATH} -e DATASET_CONFIG=${DATASET_CONFIG} -e OUTPUT_PATH_TRAJ=${RESULT_PATH} -e OUTPUT_PATH_IMU=${RESULT_PATH} -e MAP_PATH=${RESULT_PATH}/ -it super_odom bash
         - source /root/subt_ws/devel/setup.bash
         - roslaunch --wait super_odometry ugv_offline.launch provide_world_darpa_transform:=${IS_LOCALIZATION} groundtruth_path:=${CLOUD_PATH} data_config:=${DATASET_CONFIG} localization_output_path:=${OUTPUT_PATH_TRAJ} localization_output_path_imu:=${OUTPUT_PATH_IMU} accumulated_map_folder:=${MAP_PATH}
       - shell_command:
