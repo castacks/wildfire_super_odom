@@ -1,20 +1,11 @@
 [
     {
-         "datapath":"/media/airlab/T7/2023-04-12/stairs/bags",
-         "namespace":"cmu_rc7",
-         "dataconfig": "20230412_stairs.yaml",
-         "cloudpath": "/media/airlab/T7/Laurel-Cavern-Groundtruth-2999999pts.pcd", 
-         "outputpath": "/media/airlab/T7/localization_result/2023-04-12/stairs",
-         "start_time": 8.5,
-         "end_time":16.5
-    },
-    {
-        "datapath":"/media/airlab/T7/2023-04-12/big_loop/bags",
-        "namespace":"/cmu_rc7",
-        "dataconfig": "20230412_big_loop.yaml",
-        "cloudpath": "/media/airlab/T7/Laurel-Cavern-Groundtruth-2999999pts.pcd", 
-        "outputpath": "/media/airlab/T7/localization_result/2023-04-12/big_loop",
-        "start_time": 0,
-        "end_time":-1
-   }
+         "datapath":"/media/devansh/t7shield/lidar_processing/1.bags/frick_3",
+         "namespace":"/",
+         "dataconfig": "wildfire.yaml",
+         "cloudpath": "", 
+         "outputpath": "/media/devansh/t7shield/lidar_processing/2.slam_pcd_path/frick_3",
+         "start_time": 0.0,
+         "end_time": -1
+    }
 ]
