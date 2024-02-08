@@ -1,3 +1,5 @@
+NOTE: These docs are deprecated.
+
 # Environment setup (on the machine that will run Super Odometry)
 ```bash
 git clone https://github.com/water-horse/subt_localization_ws && cd subt_localization_ws
