@@ -31,12 +31,12 @@ windows:
         - sleep 1
         - docker exec --privileged -it super_odom bash
         - source /root/subt_ws/devel/setup.bash
-        - roslaunch --wait vins_estimator cam1_debug.launch
+        - roslaunch --wait vins_estimator wildfire.launch
       - shell_command:
         - sleep ${PLAY_DELAY}
         - docker exec --privileged -e DATA_PATH=${DATA_PATH} -e NAMESPACE=${NAMESPACE} -e START_TIME=${START_TIME} -e PLAY_DURATION=${PLAY_DURATION} -it super_odom bash
         - cd ${DATA_PATH}
-        - rosbag play *.bag --clock --topic ${NAMESPACE}/camera_1/image_raw /thermal/image ${NAMESPACE}/imu/data ${NAMESPACE}/velodyne_packets ${NAMESPACE}/velodyne_points ${NAMESPACE}/camera_1/image_raw:=/camera_1/image_raw ${NAMESPACE}/imu/data:=/imu/data ${NAMESPACE}/velodyne_packets:=/velodyne_packets ${NAMESPACE}/velodyne_points:=/velodyne_points -s ${START_TIME} --duration ${PLAY_DURATION}
+        - rosbag play *.bag --clock --topic ${NAMESPACE}/camera_1/image_raw /thermal_left/image ${NAMESPACE}/imu/data ${NAMESPACE}/velodyne_packets ${NAMESPACE}/velodyne_points ${NAMESPACE}/camera_1/image_raw:=/camera_1/image_raw ${NAMESPACE}/imu/data:=/imu/data ${NAMESPACE}/velodyne_packets:=/velodyne_packets ${NAMESPACE}/velodyne_points:=/velodyne_points -s ${START_TIME} --duration ${PLAY_DURATION}
       - shell_command:
         - sleep 1
         - docker exec --privileged -it super_odom bash

@@ -14,6 +14,8 @@ fi
 
 xhost +local:docker      
 
+export EXTERNAL_PATH=/media/devansh/t7shield/lidar_processing
+
 docker run --name super_odom -itd \
      --privileged \
      --gpus all \
@@ -27,5 +29,5 @@ docker run --name super_odom -itd \
      -v $XAUTH:$XAUTH \
      --rm \
      --net host \
-     twu3/super_odom:reallatest \
+     twu3/super_odom:latest \
      bash
