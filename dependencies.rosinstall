@@ -1,4 +1,4 @@
 - git:
    local-name: src/subt_state_estimation
    uri: git@bitbucket.org:cmusubt/subt_state_estimation.git
-   version: localization_batch_process
+   version: wildfire
