@@ -1,11 +1,11 @@
 [
     {
-         "datapath":"/media/devansh/t7shield/lidar_processing/1.bags/frick_3",
+         "datapath":"/media/devansh/t7shield/lidar_processing/1.bags/hawkins_run1_tree",
          "namespace":"/",
          "dataconfig": "wildfire.yaml",
          "cloudpath": "", 
-         "outputpath": "/media/devansh/t7shield/lidar_processing/2.slam_pcd_path/frick_3",
-         "start_time": 0.0,
+         "outputpath": "/media/devansh/t7shield/lidar_processing/2.slam_pcd_path/hawkins_run1_tree",
+         "start_time": 100.0,
          "end_time": -1
     }
 ]
