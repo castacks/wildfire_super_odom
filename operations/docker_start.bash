@@ -1,4 +1,4 @@
-XAUTH=/tmp/.docker.xauth
+XAUTH=/tmp/.docker_xauth
 if [ ! -f $XAUTH ]
 then
     touch $XAUTH
@@ -25,7 +25,7 @@ docker run --name super_odom -itd \
      -e DISPLAY=$DISPLAY  \
      -e QT_X11_NO_MITSHM=1 \
      -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-     -e XAUTHORITY=$XAUTH \
+     -e XAUTHORITY=/tmp/.docker.xauth \
      -v $XAUTH:$XAUTH \
      --rm \
      --net host \
